@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Someday logo">
+  <defs>
+    <linearGradient id="markField" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8ed3f4"/>
+      <stop offset="62%" stop-color="#c3e7f7"/>
+      <stop offset="100%" stop-color="#fdeecd"/>
+    </linearGradient>
+    <linearGradient id="markTrail" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2e86c1"/>
+      <stop offset="45%" stop-color="#4aa9d8"/>
+      <stop offset="72%" stop-color="#eec36f"/>
+      <stop offset="100%" stop-color="#ff9f45"/>
+    </linearGradient>
+    <radialGradient id="markGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity=".95"/>
+      <stop offset="55%" stop-color="#ffc14f" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#ffb454" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- sunny sky field, hazy warm horizon at the bottom -->
+  <rect x="0" y="0" width="256" height="256" rx="58" fill="url(#markField)"/>
+
+  <!-- the journey: ocean-blue here, wandering trail, sunny someday -->
+  <circle cx="66" cy="192" r="9" fill="#2e86c1"/>
+  <path d="M 66 192 C 108 176 92 136 122 122 C 150 109 144 152 174 118"
+        fill="none" stroke="url(#markTrail)" stroke-width="7"
+        stroke-linecap="round" stroke-dasharray="0.1 15"/>
+
+  <!-- the sun -->
+  <circle cx="176" cy="80" r="58" fill="url(#markGlow)"/>
+  <circle cx="176" cy="80" r="26" fill="none" stroke="#ffab3d" stroke-width="3" opacity=".5"/>
+  <circle cx="176" cy="80" r="12" fill="#ffd166"/>
+
+  <!-- lazy little clouds -->
+  <g fill="#ffffff" opacity=".85">
+    <ellipse cx="66" cy="86" rx="17" ry="7"/>
+    <ellipse cx="76" cy="80" rx="11" ry="6"/>
+    <ellipse cx="205" cy="170" rx="14" ry="6"/>
+    <ellipse cx="213" cy="165" rx="9" ry="5"/>
+  </g>
+</svg>

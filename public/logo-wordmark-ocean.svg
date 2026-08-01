@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="Someday">
+  <!-- variant for the ocean-blue (#2e86c1) app background;
+       use logo-wordmark.svg on light/sand backgrounds -->
+  <defs>
+    <filter id="glowWide" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="glowTight" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <linearGradient id="trailStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c3e7f7" stop-opacity=".55"/>
+      <stop offset="50%" stop-color="#e8f4fb" stop-opacity=".7"/>
+      <stop offset="100%" stop-color="#ffd166"/>
+    </linearGradient>
+  </defs>
+
+  <!-- glow layers: blurred copies of the text with only the endpoint letters
+       painted (pale-sky s = start, sunny y = destination), so the glows
+       track their glyphs in any font -->
+  <g font-family="ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', sans-serif"
+     font-size="72" font-weight="600" letter-spacing="4" text-anchor="middle">
+    <text x="320" y="96" filter="url(#glowWide)" opacity=".5"><tspan
+      fill="#c3e7f7">s</tspan><tspan fill="transparent">omeda</tspan><tspan
+      fill="#ffc14f">y</tspan></text>
+    <text x="320" y="96" filter="url(#glowTight)" opacity=".8"><tspan
+      fill="#c3e7f7" fill-opacity=".5">s</tspan><tspan fill="transparent">omeda</tspan><tspan
+      fill="#ffd166">y</tspan></text>
+    <!-- crisp layer -->
+    <text x="320" y="96"><tspan fill="#c3e7f7">s</tspan><tspan
+      fill="#ffffff">omeda</tspan><tspan fill="#ffd166">y</tspan></text>
+  </g>
+
+  <!-- wandering journey trail: a scenic-route wave, not a single swoosh -->
+  <path d="M 152 132 C 190 162 232 118 278 140 C 322 160 348 172 386 156 C 416 144 436 138 452 124"
+        fill="none" stroke="url(#trailStroke)" stroke-width="3.5"
+        stroke-linecap="round" stroke-dasharray="1 10"/>
+</svg>

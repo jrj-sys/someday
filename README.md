@@ -15,12 +15,12 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build |
-| `npm run lint` | Lint with ESLint |
-| `npm run format` | Format with Prettier |
-| `npm test` | Run unit tests (Vitest) |
+| Command          | What it does            |
+| ---------------- | ----------------------- |
+| `npm run dev`    | Start the dev server    |
+| `npm run build`  | Production build        |
+| `npm run lint`   | Lint with ESLint        |
+| `npm run format` | Format with Prettier    |
+| `npm test`       | Run unit tests (Vitest) |
 
 Version 0.0.1
