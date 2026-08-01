@@ -23,10 +23,4 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run format` | Format with Prettier |
 | `npm test` | Run unit tests (Vitest) |
 
-## Project docs
-
-- [docs/architecture.md](docs/architecture.md) — what every folder and config file is for
-- [docs/tasks/](docs/tasks/) — the current phase's task cards
-- [docs/learning-log.md](docs/learning-log.md) — retro notes per phase
-
 Version 0.0.1
