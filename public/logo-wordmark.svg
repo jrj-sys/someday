@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="Someday">
+  <defs>
+    <filter id="glowWide" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="glowTight" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <linearGradient id="trailStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2e86c1" stop-opacity=".6"/>
+      <stop offset="45%" stop-color="#4aa9d8" stop-opacity=".65"/>
+      <stop offset="72%" stop-color="#eec36f"/>
+      <stop offset="100%" stop-color="#ff9f45"/>
+    </linearGradient>
+  </defs>
+
+  <!-- glow layers: blurred copies of the text with only the endpoint letters
+       painted (ocean-blue s = start, sunny y = destination), so the glows
+       track their glyphs in any font -->
+  <g font-family="ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', sans-serif"
+     font-size="72" font-weight="600" letter-spacing="4" text-anchor="middle">
+    <text x="320" y="96" filter="url(#glowWide)" opacity=".4"><tspan
+      fill="#4aa9d8">s</tspan><tspan fill="transparent">omeda</tspan><tspan
+      fill="#ffb454">y</tspan></text>
+    <text x="320" y="96" filter="url(#glowTight)" opacity=".7"><tspan
+      fill="#4aa9d8" fill-opacity=".5">s</tspan><tspan fill="transparent">omeda</tspan><tspan
+      fill="#ffc14f">y</tspan></text>
+    <!-- crisp layer -->
+    <text x="320" y="96"><tspan fill="#2e86c1">s</tspan><tspan
+      fill="#1b4965">omeda</tspan><tspan fill="#ff9f45">y</tspan></text>
+  </g>
+
+  <!-- wandering journey trail: a scenic-route wave, not a single swoosh -->
+  <path d="M 152 132 C 190 162 232 118 278 140 C 322 160 348 172 386 156 C 416 144 436 138 452 124"
+        fill="none" stroke="url(#trailStroke)" stroke-width="3.5"
+        stroke-linecap="round" stroke-dasharray="1 10"/>
+</svg>
