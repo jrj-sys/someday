@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Button from '@/components/Button'
+import HomeCta from '@/components/HomeCta'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -15,9 +15,7 @@ export default function Home() {
           </p>
         </div>
         <br />
-        <Button variant="primary" href="/globe">
-          See the globe
-        </Button>
+        <HomeCta />
       </main>
     </div>
   )

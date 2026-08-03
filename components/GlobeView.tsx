@@ -3,25 +3,34 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Globe, { GlobeMethods } from 'react-globe.gl'
 import { MeshPhongMaterial } from 'three'
-import type { CountryFeature, World } from '@/lib/data/world'
+import { countryId, type CountryFeature, type World } from '@/lib/data/world'
+import { GLOBE_COLORS as colors, mix } from '@/lib/globe/schemes'
 
 interface GlobeViewProps {
   world: World | null
-  onCountrySelect?: (country: CountryFeature | null) => void
+  // everywhere you've been, from the saved profile
+  visited?: Set<string>
+  // country id -> score between 0 and 1. phase 3 fills this in
+  recommended?: Map<string, number>
+  selectedId?: string | null
+  onCountryClick?: (country: CountryFeature) => void
+  flyToOnClick?: boolean
 }
 
-// brand colors -- ocean sphere, sand land, sun for hover, sunset for selected
-const OCEAN = '#2e86c1'
-const SAND = '#fdeecd'
-const SUN = '#ffd166'
-const SUNSET = '#ff9f45'
-const LAND_EDGE = 'rgba(27, 73, 101, 0.4)'
+const NO_VISITS: Set<string> = new Set()
+const NO_RECS: Map<string, number> = new Map()
 
-export default function GlobeView({ world, onCountrySelect }: GlobeViewProps) {
+export default function GlobeView({
+  world,
+  visited = NO_VISITS,
+  recommended = NO_RECS,
+  selectedId = null,
+  onCountryClick,
+  flyToOnClick = false,
+}: GlobeViewProps) {
   const globeRef = useRef<GlobeMethods | undefined>(undefined)
   const wrapRef = useRef<HTMLDivElement>(null)
   const [hovered, setHovered] = useState<CountryFeature | null>(null)
-  const [selected, setSelected] = useState<CountryFeature | null>(null)
 
   // react-globe.gl wants explicit pixel dimensions, so measure the wrapper div
   // and re-measure on window resize
@@ -37,27 +46,25 @@ export default function GlobeView({ world, onCountrySelect }: GlobeViewProps) {
     return () => window.removeEventListener('resize', measure)
   }, [])
 
-  const oceanMaterial = useMemo(() => new MeshPhongMaterial({ color: OCEAN }), [])
+  const oceanMaterial = useMemo(() => new MeshPhongMaterial({ color: colors.ocean }), [])
 
-  // slow idle spin. dragging pauses it automatically (orbit controls), and we
-  // also pause while a country is hovered so it holds still for clicking
+  // slow idle spin. dragging pauses it (orbit controls do that themselves) and
+  // we pause on hover too so it holds still while you're aiming at a country
   useEffect(() => {
     const controls = globeRef.current?.controls()
     if (controls) {
-      controls.autoRotate = !hovered && !selected
+      controls.autoRotate = !hovered
       controls.autoRotateSpeed = 0.5
     }
-  }, [hovered, selected])
+  }, [hovered])
 
   const countries = world?.features ?? []
 
   const handleClick = (feature: CountryFeature, coords: { lat: number; lng: number }) => {
-    const next = feature === selected ? null : feature
-    setSelected(next)
-    onCountrySelect?.(next)
-    if (next) {
-      // fly toward where they clicked rather than computing true centroids,
-      // close enough and free. 1.8 keeps the sphere's curve in frame
+    onCountryClick?.(feature)
+    if (flyToOnClick) {
+      // fly toward where they clicked instead of computing real centroids.
+      // 1.8 keeps the sphere's curve in frame, closer loses the globe feeling
       globeRef.current?.pointOfView({ lat: coords.lat, lng: coords.lng, altitude: 1.8 }, 800)
     }
   }
@@ -81,13 +88,33 @@ export default function GlobeView({ world, onCountrySelect }: GlobeViewProps) {
             }
           }}
           polygonsData={countries}
-          polygonAltitude={(f) => (f === selected ? 0.02 : 0.005)}
-          polygonCapColor={(f) => (f === selected ? SUNSET : f === hovered ? SUN : SAND)}
-          polygonSideColor={() => LAND_EDGE}
-          polygonStrokeColor={() => OCEAN}
+          polygonAltitude={(f) => {
+            const id = countryId(f as CountryFeature)
+            if (id === selectedId) return 0.03
+            const score = recommended.get(id)
+            // stronger recommendations sit higher off the surface
+            if (score !== undefined && !visited.has(id)) return 0.008 + score * 0.022
+            return 0.005
+          }}
+          polygonCapColor={(f) => {
+            const feature = f as CountryFeature
+            const id = countryId(feature)
+            // been there wins over go there, you can't be recommended a place
+            // you've already ticked off
+            if (visited.has(id)) return colors.visited
+            const score = recommended.get(id)
+            if (score !== undefined) return mix(colors.recLow, colors.recHigh, score)
+            return feature === hovered ? colors.hover : colors.base
+          }}
+          polygonSideColor={() => colors.landEdge}
+          polygonStrokeColor={(f) =>
+            countryId(f as CountryFeature) === selectedId ? colors.selectedStroke : colors.stroke
+          }
           polygonLabel={(f) => {
             const c = f as CountryFeature
-            return `<div class="globe-tooltip">${c.properties.ADMIN}</div>`
+            const id = countryId(c)
+            const note = visited.has(id) ? ' · visited' : ''
+            return `<div class="globe-tooltip">${c.properties.ADMIN}${note}</div>`
           }}
           onPolygonHover={(f) => setHovered((f as CountryFeature) ?? null)}
           onPolygonClick={(f, _event, coords) => handleClick(f as CountryFeature, coords)}

@@ -29,6 +29,11 @@
   background: rgba(27, 73, 101, 0.08);
 }
 
+.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .lg {
   padding: 12px 26px;
   font-size: 1rem;

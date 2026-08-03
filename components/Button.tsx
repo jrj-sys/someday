@@ -9,6 +9,7 @@ interface ButtonProps {
   size?: 'sm' | 'lg'
   href?: string
   onClick?: () => void
+  disabled?: boolean
 }
 
 export default function Button({
@@ -17,12 +18,15 @@ export default function Button({
   size = 'lg',
   href,
   onClick,
+  disabled = false,
 }: ButtonProps) {
   const variantClass = variant === 'ghost' ? styles.ghost : styles.primary
   const sizeClass = size === 'sm' ? styles.sm : styles.lg
-  const className = `${variantClass} ${sizeClass}`
+  const className = `${variantClass} ${sizeClass}${disabled ? ` ${styles.disabled}` : ''}`
 
-  if (href) {
+  // a disabled link isn't a thing in html, so render the span version instead
+  // of a Link that still navigates
+  if (href && !disabled) {
     return (
       <Link href={href} className={className}>
         {children}
@@ -31,7 +35,7 @@ export default function Button({
   }
 
   return (
-    <button type="button" className={className} onClick={onClick}>
+    <button type="button" className={className} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   )
