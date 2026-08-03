@@ -1,18 +1,13 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
-import { fetchWorld, type CountryFeature, type World } from '@/lib/data/world'
+import { useEffect, useMemo, useState } from 'react'
+import GlobeLazy from '@/components/GlobeLazy'
+import { useProfile } from '@/components/ProfileProvider'
+import { countryId, fetchWorld, type CountryFeature, type World } from '@/lib/data/world'
 import styles from './globe.module.css'
 
-// react-globe.gl touches window at import time so it can never be rendered on
-// the server -- ssr:false keeps next from even trying
-const GlobeView = dynamic(() => import('@/components/GlobeView'), {
-  ssr: false,
-  loading: () => <p className={styles.loading}>loading the world...</p>,
-})
-
 export default function GlobeShell() {
+  const { profile } = useProfile()
   const [world, setWorld] = useState<World | null>(null)
   const [selected, setSelected] = useState<CountryFeature | null>(null)
 
@@ -20,11 +15,25 @@ export default function GlobeShell() {
     fetchWorld().then(setWorld).catch(console.error)
   }, [])
 
+  // this is the whole point of "see my globe" 
+  const visited = useMemo(() => new Set(profile?.visited ?? []), [profile])
+
+  const toggle = (country: CountryFeature) => {
+    setSelected((prev) => (prev && countryId(prev) === countryId(country) ? null : country))
+  }
+
   return (
     <div className={styles.stage}>
-      {/* stub until we decide what selecting a country actually opens */}
       {selected && <div className={styles.selectedBadge}>{selected.properties.ADMIN}</div>}
-      <GlobeView world={world} onCountrySelect={setSelected} />
+
+      {/* recommended stays empty until phase 3 has real scores to hand it */}
+      <GlobeLazy
+        world={world}
+        visited={visited}
+        selectedId={selected ? countryId(selected) : null}
+        onCountryClick={toggle}
+        flyToOnClick
+      />
     </div>
   )
 }

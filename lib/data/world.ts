@@ -13,6 +13,15 @@ export interface CountryProperties {
 export type World = FeatureCollection<Geometry, CountryProperties>
 export type CountryFeature = Feature<Geometry, CountryProperties>
 
+// natural earth leaves ISO_A3 as "-99" on a handful of features, and france +
+// norway are two of them (mapping trivia: their codes live on other fields).
+// so anything keyed by country needs this, not raw ISO_A3, or france and
+// norway end up sharing an id
+export function countryId(feature: CountryFeature): string {
+  const iso = feature.properties.ISO_A3
+  return !iso || iso === '-99' ? feature.properties.ADMIN : iso
+}
+
 // lives in public/ so the ~480kb of coordinates gets served as a static asset
 // instead of ending up in the js bundle. client-side only, which is fine --
 // the globe can't render on the server anyway
