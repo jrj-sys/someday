@@ -22,7 +22,10 @@ export default function Button({
 }: ButtonProps) {
   const variantClass = variant === 'ghost' ? styles.ghost : styles.primary
   const sizeClass = size === 'sm' ? styles.sm : styles.lg
-  const className = `${variantClass} ${sizeClass}${disabled ? ` ${styles.disabled}` : ''}`
+
+  const classNames = [variantClass, sizeClass]
+  if (disabled) classNames.push(styles.disabled)
+  const className = classNames.join(' ')
 
   // a disabled link isn't a thing in html, so render the span version instead
   // of a Link that still navigates

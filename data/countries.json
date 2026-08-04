@@ -1,0 +1,641 @@
+[
+  {
+    "id": "France",
+    "name": "France",
+    "region": "Western Europe",
+    "activities": ["food", "culture", "cities", "beaches"],
+    "climates": ["mild"],
+    "cost": 3,
+    "advisory": 2
+  },
+  {
+    "id": "ESP",
+    "name": "Spain",
+    "region": "Southern Europe",
+    "activities": ["beaches", "food", "nightlife", "culture"],
+    "climates": ["hot", "mild"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "ITA",
+    "name": "Italy",
+    "region": "Southern Europe",
+    "activities": ["food", "culture", "beaches", "cities"],
+    "climates": ["mild", "hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "PRT",
+    "name": "Portugal",
+    "region": "Southern Europe",
+    "activities": ["beaches", "food", "culture", "adventure"],
+    "climates": ["mild", "hot"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "GRC",
+    "name": "Greece",
+    "region": "Southern Europe",
+    "activities": ["beaches", "culture", "food", "nightlife"],
+    "climates": ["hot", "mild"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "HRV",
+    "name": "Croatia",
+    "region": "Southern Europe",
+    "activities": ["beaches", "culture", "adventure"],
+    "climates": ["hot", "mild"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "GBR",
+    "name": "United Kingdom",
+    "region": "Western Europe",
+    "activities": ["culture", "cities", "nightlife"],
+    "climates": ["mild", "cold"],
+    "cost": 3,
+    "advisory": 2
+  },
+  {
+    "id": "IRL",
+    "name": "Ireland",
+    "region": "Western Europe",
+    "activities": ["hiking", "culture", "nightlife"],
+    "climates": ["mild", "cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "NLD",
+    "name": "Netherlands",
+    "region": "Western Europe",
+    "activities": ["cities", "culture", "nightlife"],
+    "climates": ["mild", "cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "DEU",
+    "name": "Germany",
+    "region": "Western Europe",
+    "activities": ["cities", "culture", "nightlife", "food"],
+    "climates": ["mild", "cold"],
+    "cost": 3,
+    "advisory": 2
+  },
+  {
+    "id": "CHE",
+    "name": "Switzerland",
+    "region": "Western Europe",
+    "activities": ["hiking", "adventure", "cities"],
+    "climates": ["cold", "mild"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "AUT",
+    "name": "Austria",
+    "region": "Western Europe",
+    "activities": ["hiking", "culture", "adventure"],
+    "climates": ["cold", "mild"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "Norway",
+    "name": "Norway",
+    "region": "Northern Europe",
+    "activities": ["hiking", "wildlife", "adventure"],
+    "climates": ["cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "SWE",
+    "name": "Sweden",
+    "region": "Northern Europe",
+    "activities": ["cities", "hiking", "culture"],
+    "climates": ["cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "ISL",
+    "name": "Iceland",
+    "region": "Northern Europe",
+    "activities": ["hiking", "adventure", "wildlife"],
+    "climates": ["cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "FIN",
+    "name": "Finland",
+    "region": "Northern Europe",
+    "activities": ["hiking", "wildlife", "cities"],
+    "climates": ["cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "DNK",
+    "name": "Denmark",
+    "region": "Northern Europe",
+    "activities": ["cities", "food", "culture"],
+    "climates": ["cold", "mild"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "CZE",
+    "name": "Czechia",
+    "region": "Eastern Europe",
+    "activities": ["culture", "cities", "nightlife"],
+    "climates": ["mild", "cold"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "POL",
+    "name": "Poland",
+    "region": "Eastern Europe",
+    "activities": ["culture", "cities", "food"],
+    "climates": ["cold", "mild"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "HUN",
+    "name": "Hungary",
+    "region": "Eastern Europe",
+    "activities": ["culture", "nightlife", "cities"],
+    "climates": ["mild", "cold"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "TUR",
+    "name": "Turkey",
+    "region": "Middle East",
+    "activities": ["culture", "food", "beaches", "cities"],
+    "climates": ["hot", "mild"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "JPN",
+    "name": "Japan",
+    "region": "East Asia",
+    "activities": ["food", "culture", "cities", "nightlife"],
+    "climates": ["mild", "cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "KOR",
+    "name": "South Korea",
+    "region": "East Asia",
+    "activities": ["cities", "food", "nightlife", "culture"],
+    "climates": ["mild", "cold"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "CHN",
+    "name": "China",
+    "region": "East Asia",
+    "activities": ["culture", "cities", "hiking", "food"],
+    "climates": ["mild", "cold", "hot"],
+    "cost": 2,
+    "advisory": 3
+  },
+  {
+    "id": "TWN",
+    "name": "Taiwan",
+    "region": "East Asia",
+    "activities": ["food", "hiking", "cities", "culture"],
+    "climates": ["hot", "mild"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "THA",
+    "name": "Thailand",
+    "region": "Southeast Asia",
+    "activities": ["beaches", "food", "nightlife", "culture"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "VNM",
+    "name": "Vietnam",
+    "region": "Southeast Asia",
+    "activities": ["food", "beaches", "culture", "adventure"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "IDN",
+    "name": "Indonesia",
+    "region": "Southeast Asia",
+    "activities": ["beaches", "adventure", "wildlife", "culture"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "MYS",
+    "name": "Malaysia",
+    "region": "Southeast Asia",
+    "activities": ["food", "beaches", "cities", "wildlife"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "SGP",
+    "name": "Singapore",
+    "region": "Southeast Asia",
+    "activities": ["food", "cities", "nightlife"],
+    "climates": ["hot"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "PHL",
+    "name": "Philippines",
+    "region": "Southeast Asia",
+    "activities": ["beaches", "adventure", "wildlife"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "KHM",
+    "name": "Cambodia",
+    "region": "Southeast Asia",
+    "activities": ["culture", "beaches", "food"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "LAO",
+    "name": "Laos",
+    "region": "Southeast Asia",
+    "activities": ["culture", "hiking", "adventure"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "IND",
+    "name": "India",
+    "region": "South Asia",
+    "activities": ["culture", "food", "wildlife", "cities"],
+    "climates": ["hot", "mild"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "NPL",
+    "name": "Nepal",
+    "region": "South Asia",
+    "activities": ["hiking", "adventure", "culture"],
+    "climates": ["cold", "mild"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "LKA",
+    "name": "Sri Lanka",
+    "region": "South Asia",
+    "activities": ["beaches", "wildlife", "culture", "food"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "ARE",
+    "name": "United Arab Emirates",
+    "region": "Middle East",
+    "activities": ["cities", "nightlife", "beaches"],
+    "climates": ["hot"],
+    "cost": 3,
+    "advisory": 2
+  },
+  {
+    "id": "JOR",
+    "name": "Jordan",
+    "region": "Middle East",
+    "activities": ["culture", "adventure", "hiking"],
+    "climates": ["hot", "mild"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "OMN",
+    "name": "Oman",
+    "region": "Middle East",
+    "activities": ["adventure", "beaches", "culture"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "MAR",
+    "name": "Morocco",
+    "region": "North Africa",
+    "activities": ["culture", "food", "adventure", "hiking"],
+    "climates": ["hot", "mild"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "EGY",
+    "name": "Egypt",
+    "region": "North Africa",
+    "activities": ["culture", "beaches", "adventure"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 3
+  },
+  {
+    "id": "TUN",
+    "name": "Tunisia",
+    "region": "North Africa",
+    "activities": ["beaches", "culture"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "ZAF",
+    "name": "South Africa",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "adventure", "beaches", "food"],
+    "climates": ["mild", "hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "KEN",
+    "name": "Kenya",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "adventure", "beaches"],
+    "climates": ["hot", "mild"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "TZA",
+    "name": "Tanzania",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "hiking", "beaches"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "NAM",
+    "name": "Namibia",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "adventure", "hiking"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "BWA",
+    "name": "Botswana",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "adventure"],
+    "climates": ["hot"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "GHA",
+    "name": "Ghana",
+    "region": "Sub-Saharan Africa",
+    "activities": ["culture", "beaches", "food"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "RWA",
+    "name": "Rwanda",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "hiking", "culture"],
+    "climates": ["mild", "hot"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "MDG",
+    "name": "Madagascar",
+    "region": "Sub-Saharan Africa",
+    "activities": ["wildlife", "beaches", "adventure"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "USA",
+    "name": "United States of America",
+    "region": "North America",
+    "activities": ["cities", "hiking", "nightlife", "food", "beaches"],
+    "climates": ["hot", "mild", "cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "CAN",
+    "name": "Canada",
+    "region": "North America",
+    "activities": ["hiking", "wildlife", "cities", "adventure"],
+    "climates": ["cold", "mild"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "MEX",
+    "name": "Mexico",
+    "region": "North America",
+    "activities": ["beaches", "food", "culture", "nightlife"],
+    "climates": ["hot", "mild"],
+    "cost": 1,
+    "advisory": 3
+  },
+  {
+    "id": "CRI",
+    "name": "Costa Rica",
+    "region": "Central America",
+    "activities": ["wildlife", "adventure", "beaches", "hiking"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "PAN",
+    "name": "Panama",
+    "region": "Central America",
+    "activities": ["beaches", "wildlife", "cities"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "GTM",
+    "name": "Guatemala",
+    "region": "Central America",
+    "activities": ["culture", "hiking", "adventure"],
+    "climates": ["hot", "mild"],
+    "cost": 1,
+    "advisory": 3
+  },
+  {
+    "id": "BLZ",
+    "name": "Belize",
+    "region": "Central America",
+    "activities": ["beaches", "wildlife", "adventure"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "CUB",
+    "name": "Cuba",
+    "region": "Caribbean",
+    "activities": ["beaches", "culture", "nightlife", "food"],
+    "climates": ["hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "DOM",
+    "name": "Dominican Republic",
+    "region": "Caribbean",
+    "activities": ["beaches", "nightlife", "adventure"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "JAM",
+    "name": "Jamaica",
+    "region": "Caribbean",
+    "activities": ["beaches", "nightlife", "food"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 3
+  },
+  {
+    "id": "BRA",
+    "name": "Brazil",
+    "region": "South America",
+    "activities": ["beaches", "nightlife", "wildlife", "food"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  },
+  {
+    "id": "ARG",
+    "name": "Argentina",
+    "region": "South America",
+    "activities": ["food", "cities", "hiking", "culture"],
+    "climates": ["mild", "cold"],
+    "cost": 1,
+    "advisory": 1
+  },
+  {
+    "id": "CHL",
+    "name": "Chile",
+    "region": "South America",
+    "activities": ["hiking", "adventure", "wildlife"],
+    "climates": ["mild", "cold"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "PER",
+    "name": "Peru",
+    "region": "South America",
+    "activities": ["hiking", "culture", "food", "adventure"],
+    "climates": ["mild", "hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "COL",
+    "name": "Colombia",
+    "region": "South America",
+    "activities": ["food", "nightlife", "beaches", "culture"],
+    "climates": ["hot", "mild"],
+    "cost": 1,
+    "advisory": 3
+  },
+  {
+    "id": "ECU",
+    "name": "Ecuador",
+    "region": "South America",
+    "activities": ["wildlife", "hiking", "culture"],
+    "climates": ["mild", "hot"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "BOL",
+    "name": "Bolivia",
+    "region": "South America",
+    "activities": ["hiking", "culture", "adventure"],
+    "climates": ["cold", "mild"],
+    "cost": 1,
+    "advisory": 2
+  },
+  {
+    "id": "URY",
+    "name": "Uruguay",
+    "region": "South America",
+    "activities": ["beaches", "food", "cities"],
+    "climates": ["mild", "hot"],
+    "cost": 2,
+    "advisory": 1
+  },
+  {
+    "id": "AUS",
+    "name": "Australia",
+    "region": "Oceania",
+    "activities": ["beaches", "wildlife", "cities", "adventure"],
+    "climates": ["hot", "mild"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "NZL",
+    "name": "New Zealand",
+    "region": "Oceania",
+    "activities": ["hiking", "adventure", "wildlife"],
+    "climates": ["mild", "cold"],
+    "cost": 3,
+    "advisory": 1
+  },
+  {
+    "id": "FJI",
+    "name": "Fiji",
+    "region": "Oceania",
+    "activities": ["beaches", "adventure"],
+    "climates": ["hot"],
+    "cost": 2,
+    "advisory": 2
+  }
+]

@@ -45,36 +45,48 @@ export default function Wizard() {
     fetchWorld().then(setWorld).catch(console.error)
   }, [])
 
-  const patch = (fields: Partial<Profile>) => setDraft((d) => ({ ...d, ...fields }))
-
-  const toggleActivity = (id: ActivityId) => {
-    patch({
-      activities: draft.activities.includes(id)
-        ? draft.activities.filter((a) => a !== id)
-        : [...draft.activities, id],
-    })
+  function patch(fields: Partial<Profile>) {
+    setDraft((previous) => ({ ...previous, ...fields }))
   }
 
-  const isLast = step === STEPS.length - 1
+  function toggleActivity(id: ActivityId) {
+    const alreadyPicked = draft.activities.includes(id)
+
+    if (alreadyPicked) {
+      const withoutThisOne = draft.activities.filter((activity) => activity !== id)
+      patch({ activities: withoutThisOne })
+    } else {
+      patch({ activities: [...draft.activities, id] })
+    }
+  }
+
+  const isLastStep = step === STEPS.length - 1
+
   // only gate the first step, the rest all have sensible defaults or are
   // legitimately allowed to be empty
-  const canAdvance = step === 0 ? draft.activities.length > 0 : true
+  const isActivityStep = step === 0
+  const canAdvance = isActivityStep ? draft.activities.length > 0 : true
 
-  const next = () => {
-    if (isLast) {
+  function goToNextStep() {
+    if (isLastStep) {
       save(draft)
       router.push('/globe')
       return
     }
-    setStep((s) => s + 1)
+    setStep((currentStep) => currentStep + 1)
+  }
+
+  function goToPreviousStep() {
+    setStep((currentStep) => currentStep - 1)
   }
 
   return (
     <div className={styles.wizard}>
       <div className={styles.progress}>
-        {STEPS.map((label, i) => (
-          <span key={label} className={i <= step ? styles.dotDone : styles.dot} />
-        ))}
+        {STEPS.map((label, stepIndex) => {
+          const reachedThisStep = stepIndex <= step
+          return <span key={label} className={reachedThisStep ? styles.dotDone : styles.dot} />
+        })}
       </div>
 
       <h1 className={styles.question}>{STEPS[step]}</h1>
@@ -84,49 +96,58 @@ export default function Wizard() {
           <>
             <p className={styles.hint}>Pick as many as you like. This drives everything.</p>
             <div className={styles.chipGrid}>
-              {ACTIVITIES.map((a) => (
-                <button
-                  key={a.id}
-                  type="button"
-                  onClick={() => toggleActivity(a.id)}
-                  className={draft.activities.includes(a.id) ? styles.chipOn : styles.chipOff}
-                >
-                  <span aria-hidden>{a.emoji}</span> {a.label}
-                </button>
-              ))}
+              {ACTIVITIES.map((activity) => {
+                const isPicked = draft.activities.includes(activity.id)
+                return (
+                  <button
+                    key={activity.id}
+                    type="button"
+                    onClick={() => toggleActivity(activity.id)}
+                    className={isPicked ? styles.chipOn : styles.chipOff}
+                  >
+                    <span aria-hidden>{activity.emoji}</span> {activity.label}
+                  </button>
+                )
+              })}
             </div>
           </>
         )}
 
         {step === 1 && (
           <div className={styles.cardGrid}>
-            {CLIMATES.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                onClick={() => patch({ climate: c.id })}
-                className={draft.climate === c.id ? styles.cardOn : styles.cardOff}
-              >
-                <strong>{c.label}</strong>
-                <span>{c.hint}</span>
-              </button>
-            ))}
+            {CLIMATES.map((climate) => {
+              const isPicked = draft.climate === climate.id
+              return (
+                <button
+                  key={climate.id}
+                  type="button"
+                  onClick={() => patch({ climate: climate.id })}
+                  className={isPicked ? styles.cardOn : styles.cardOff}
+                >
+                  <strong>{climate.label}</strong>
+                  <span>{climate.hint}</span>
+                </button>
+              )
+            })}
           </div>
         )}
 
         {step === 2 && (
           <div className={styles.cardGrid}>
-            {BUDGETS.map((b) => (
-              <button
-                key={b.id}
-                type="button"
-                onClick={() => patch({ budget: b.id })}
-                className={draft.budget === b.id ? styles.cardOn : styles.cardOff}
-              >
-                <strong>{b.label}</strong>
-                <span>{b.hint}</span>
-              </button>
-            ))}
+            {BUDGETS.map((budget) => {
+              const isPicked = draft.budget === budget.id
+              return (
+                <button
+                  key={budget.id}
+                  type="button"
+                  onClick={() => patch({ budget: budget.id })}
+                  className={isPicked ? styles.cardOn : styles.cardOff}
+                >
+                  <strong>{budget.label}</strong>
+                  <span>{budget.hint}</span>
+                </button>
+              )
+            })}
           </div>
         )}
 
@@ -155,13 +176,13 @@ export default function Wizard() {
 
       <div className={styles.actions}>
         {step > 0 && (
-          <Button variant="ghost" size="sm" onClick={() => setStep((s) => s - 1)}>
+          <Button variant="ghost" size="sm" onClick={goToPreviousStep}>
             Back
           </Button>
         )}
         <div className={styles.spacer} />
-        <Button onClick={next} disabled={!canAdvance}>
-          {isLast ? 'See my globe' : 'Next'}
+        <Button onClick={goToNextStep} disabled={!canAdvance}>
+          {isLastStep ? 'See my globe' : 'Next'}
         </Button>
       </div>
     </div>

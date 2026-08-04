@@ -43,6 +43,8 @@ export const BUDGETS: { id: BudgetId; label: string; hint: string }[] = [
 ]
 
 export function emptyProfile(): Profile {
+  // 'any' climate and a comfortable budget mean an untouched profile doesn't
+  // secretly express a preference nobody chose
   return {
     activities: [],
     climate: 'any',

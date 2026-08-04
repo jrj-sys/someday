@@ -29,21 +29,24 @@ export default function GlobeView({
   flyToOnClick = false,
 }: GlobeViewProps) {
   const globeRef = useRef<GlobeMethods | undefined>(undefined)
-  const wrapRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const [hovered, setHovered] = useState<CountryFeature | null>(null)
 
   // react-globe.gl wants explicit pixel dimensions, so measure the wrapper div
   // and re-measure on window resize
-  const [size, setSize] = useState({ w: 0, h: 0 })
+  const [size, setSize] = useState({ width: 0, height: 0 })
   useEffect(() => {
-    const measure = () => {
-      if (wrapRef.current) {
-        setSize({ w: wrapRef.current.clientWidth, h: wrapRef.current.clientHeight })
-      }
+    function measureWrapper() {
+      if (!wrapperRef.current) return
+      setSize({
+        width: wrapperRef.current.clientWidth,
+        height: wrapperRef.current.clientHeight,
+      })
     }
-    measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
+
+    measureWrapper()
+    window.addEventListener('resize', measureWrapper)
+    return () => window.removeEventListener('resize', measureWrapper)
   }, [])
 
   const oceanMaterial = useMemo(() => new MeshPhongMaterial({ color: colors.ocean }), [])
@@ -69,13 +72,48 @@ export default function GlobeView({
     }
   }
 
+  // how far a country floats off the sphere. selection lifts most, then
+  // recommendations by strength, everything else sits flat
+  function altitudeFor(feature: CountryFeature) {
+    const id = countryId(feature)
+    if (id === selectedId) return 0.03
+
+    const recommendationScore = recommended.get(id)
+    const isUnvisitedRecommendation = recommendationScore !== undefined && !visited.has(id)
+    if (isUnvisitedRecommendation) return 0.008 + recommendationScore * 0.022
+
+    return 0.005
+  }
+
+  function fillColorFor(feature: CountryFeature) {
+    const id = countryId(feature)
+
+    // been there wins over go there, you can't be recommended a place you have
+    // already ticked off
+    if (visited.has(id)) return colors.visited
+
+    const recommendationScore = recommended.get(id)
+    if (recommendationScore !== undefined) {
+      return mix(colors.recLow, colors.recHigh, recommendationScore)
+    }
+
+    if (feature === hovered) return colors.hover
+    return colors.base
+  }
+
+  function tooltipFor(feature: CountryFeature) {
+    const hasBeenThere = visited.has(countryId(feature))
+    const note = hasBeenThere ? ' · visited' : ''
+    return `<div class="globe-tooltip">${feature.properties.ADMIN}${note}</div>`
+  }
+
   return (
-    <div ref={wrapRef} style={{ width: '100%', height: '100%' }}>
-      {size.w > 0 && (
+    <div ref={wrapperRef} style={{ width: '100%', height: '100%' }}>
+      {size.width > 0 && (
         <Globe
           ref={globeRef}
-          width={size.w}
-          height={size.h}
+          width={size.width}
+          height={size.height}
           backgroundColor="rgba(0,0,0,0)"
           globeMaterial={oceanMaterial}
           globeImageUrl={null}
@@ -88,36 +126,19 @@ export default function GlobeView({
             }
           }}
           polygonsData={countries}
-          polygonAltitude={(f) => {
-            const id = countryId(f as CountryFeature)
-            if (id === selectedId) return 0.03
-            const score = recommended.get(id)
-            // stronger recommendations sit higher off the surface
-            if (score !== undefined && !visited.has(id)) return 0.008 + score * 0.022
-            return 0.005
-          }}
-          polygonCapColor={(f) => {
-            const feature = f as CountryFeature
-            const id = countryId(feature)
-            // been there wins over go there, you can't be recommended a place
-            // you've already ticked off
-            if (visited.has(id)) return colors.visited
-            const score = recommended.get(id)
-            if (score !== undefined) return mix(colors.recLow, colors.recHigh, score)
-            return feature === hovered ? colors.hover : colors.base
-          }}
+          polygonAltitude={(polygon) => altitudeFor(polygon as CountryFeature)}
+          polygonCapColor={(polygon) => fillColorFor(polygon as CountryFeature)}
           polygonSideColor={() => colors.landEdge}
-          polygonStrokeColor={(f) =>
-            countryId(f as CountryFeature) === selectedId ? colors.selectedStroke : colors.stroke
-          }
-          polygonLabel={(f) => {
-            const c = f as CountryFeature
-            const id = countryId(c)
-            const note = visited.has(id) ? ' · visited' : ''
-            return `<div class="globe-tooltip">${c.properties.ADMIN}${note}</div>`
+          polygonStrokeColor={(polygon) => {
+            const isSelected = countryId(polygon as CountryFeature) === selectedId
+            if (isSelected) return colors.selectedStroke
+            return colors.stroke
           }}
-          onPolygonHover={(f) => setHovered((f as CountryFeature) ?? null)}
-          onPolygonClick={(f, _event, coords) => handleClick(f as CountryFeature, coords)}
+          polygonLabel={(polygon) => tooltipFor(polygon as CountryFeature)}
+          onPolygonHover={(polygon) => setHovered((polygon as CountryFeature) ?? null)}
+          onPolygonClick={(polygon, _event, coords) =>
+            handleClick(polygon as CountryFeature, coords)
+          }
           polygonsTransitionDuration={200}
         />
       )}

@@ -17,11 +17,29 @@ export const GLOBE_COLORS = {
   landEdge: 'rgba(27, 73, 101, 0.4)',
 }
 
-// blends two hex colors
+// "#ffb01f" -> { red: 255, green: 176, blue: 31 }
+function hexToRgb(hex: string) {
+  return {
+    red: parseInt(hex.slice(1, 3), 16),
+    green: parseInt(hex.slice(3, 5), 16),
+    blue: parseInt(hex.slice(5, 7), 16),
+  }
+}
+
+// blends two hex colors. amount 0 gives you `from`, 1 gives you `to`, and
+// anything between slides along the line connecting them
 export function mix(from: string, to: string, amount: number) {
-  const parse = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))
-  const [r1, g1, b1] = parse(from)
-  const [r2, g2, b2] = parse(to)
-  const channel = (a: number, b: number) => Math.round(a + (b - a) * amount)
-  return `rgb(${channel(r1, r2)}, ${channel(g1, g2)}, ${channel(b1, b2)})`
+  const start = hexToRgb(from)
+  const end = hexToRgb(to)
+
+  function blendChannel(startValue: number, endValue: number) {
+    const distance = endValue - startValue
+    return Math.round(startValue + distance * amount)
+  }
+
+  const red = blendChannel(start.red, end.red)
+  const green = blendChannel(start.green, end.green)
+  const blue = blendChannel(start.blue, end.blue)
+
+  return `rgb(${red}, ${green}, ${blue})`
 }

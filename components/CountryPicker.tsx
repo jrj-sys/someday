@@ -11,30 +11,43 @@ interface CountryPickerProps {
   onChange: (ids: string[]) => void
 }
 
+const MAX_SEARCH_RESULTS = 6
+
 export default function CountryPicker({ world, value, onChange }: CountryPickerProps) {
   const [query, setQuery] = useState('')
 
-  // set for the globe's o(1) lookups per polygon per frame, array stays the
+  // set for the globe's o(1) lookups per polygon per frame, the array stays the
   // source of truth so the saved profile has a stable order
   const selected = useMemo(() => new Set(value), [value])
 
-  const byId = useMemo(() => {
-    const map = new Map<string, CountryFeature>()
-    for (const f of world?.features ?? []) map.set(countryId(f), f)
-    return map
+  const featuresByCountryId = useMemo(() => {
+    const lookup = new Map<string, CountryFeature>()
+    for (const feature of world?.features ?? []) {
+      lookup.set(countryId(feature), feature)
+    }
+    return lookup
   }, [world])
 
-  const matches = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return []
-    return (world?.features ?? [])
-      .filter((f) => f.properties.ADMIN.toLowerCase().includes(q))
-      .slice(0, 6)
+  const searchResults = useMemo(() => {
+    const searchTerm = query.trim().toLowerCase()
+    if (searchTerm === '') return []
+
+    const allFeatures = world?.features ?? []
+    const nameMatches = allFeatures.filter((feature) =>
+      feature.properties.ADMIN.toLowerCase().includes(searchTerm),
+    )
+    return nameMatches.slice(0, MAX_SEARCH_RESULTS)
   }, [query, world])
 
-  const toggle = (country: CountryFeature) => {
+  function toggleCountry(country: CountryFeature) {
     const id = countryId(country)
-    onChange(selected.has(id) ? value.filter((v) => v !== id) : [...value, id])
+
+    if (selected.has(id)) {
+      const withoutThisOne = value.filter((selectedId) => selectedId !== id)
+      onChange(withoutThisOne)
+    } else {
+      onChange([...value, id])
+    }
   }
 
   return (
@@ -45,23 +58,25 @@ export default function CountryPicker({ world, value, onChange }: CountryPickerP
           type="text"
           value={query}
           placeholder="Search for a country"
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(event) => setQuery(event.target.value)}
         />
-        {matches.length > 0 && (
+        {searchResults.length > 0 && (
           <ul className={styles.results}>
-            {matches.map((f) => {
-              const id = countryId(f)
+            {searchResults.map((feature) => {
+              const id = countryId(feature)
+              const alreadyPicked = selected.has(id)
+
               return (
                 <li key={id}>
                   <button
                     type="button"
                     onClick={() => {
-                      toggle(f)
+                      toggleCountry(feature)
                       setQuery('')
                     }}
                   >
-                    <span>{f.properties.ADMIN}</span>
-                    {selected.has(id) && <span className={styles.tick}>remove</span>}
+                    <span>{feature.properties.ADMIN}</span>
+                    {alreadyPicked && <span className={styles.tick}>remove</span>}
                   </button>
                 </li>
               )
@@ -71,23 +86,27 @@ export default function CountryPicker({ world, value, onChange }: CountryPickerP
 
         <div className={styles.chips}>
           {value.length === 0 && <p className={styles.empty}>nothing picked yet</p>}
-          {value.map((id) => (
-            <button
-              key={id}
-              type="button"
-              className={styles.chip}
-              onClick={() => onChange(value.filter((v) => v !== id))}
-            >
-              {byId.get(id)?.properties.ADMIN ?? id}
-              <span aria-hidden>×</span>
-            </button>
-          ))}
+          {value.map((id) => {
+            const feature = featuresByCountryId.get(id)
+            const name = feature?.properties.ADMIN ?? id
+
+            function removeThisCountry() {
+              onChange(value.filter((selectedId) => selectedId !== id))
+            }
+
+            return (
+              <button key={id} type="button" className={styles.chip} onClick={removeThisCountry}>
+                {name}
+                <span aria-hidden>×</span>
+              </button>
+            )
+          })}
         </div>
       </div>
 
       <div className={styles.globe}>
         {/* picked countries borrow the "visited" paint, it's the same idea */}
-        <GlobeLazy world={world} visited={selected} onCountryClick={toggle} />
+        <GlobeLazy world={world} visited={selected} onCountryClick={toggleCountry} />
       </div>
     </div>
   )

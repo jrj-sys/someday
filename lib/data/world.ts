@@ -18,17 +18,20 @@ export type CountryFeature = Feature<Geometry, CountryProperties>
 // so anything keyed by country needs this, not raw ISO_A3, or france and
 // norway end up sharing an id
 export function countryId(feature: CountryFeature): string {
-  const iso = feature.properties.ISO_A3
-  return !iso || iso === '-99' ? feature.properties.ADMIN : iso
+  const isoCode = feature.properties.ISO_A3
+  const isoIsMissing = !isoCode || isoCode === '-99'
+
+  if (isoIsMissing) return feature.properties.ADMIN
+  return isoCode
 }
 
 // lives in public/ so the ~480kb of coordinates gets served as a static asset
 // instead of ending up in the js bundle. client-side only, which is fine --
 // the globe can't render on the server anyway
 export async function fetchWorld(): Promise<World> {
-  const res = await fetch('/data/world.geojson')
-  if (!res.ok) {
-    throw new Error(`failed to load world.geojson: ${res.status}`)
+  const response = await fetch('/data/world.geojson')
+  if (!response.ok) {
+    throw new Error(`failed to load world.geojson: ${response.status}`)
   }
-  return res.json()
+  return response.json()
 }
