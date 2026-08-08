@@ -1,0 +1,14 @@
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: linear-gradient(var(--sky), var(--sky-pale) 55%, var(--sand));
+}
+
+.message {
+  color: var(--ocean-deep);
+  font-size: 1.05rem;
+}

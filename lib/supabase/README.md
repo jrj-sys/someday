@@ -1,6 +1,9 @@
-# lib/supabase — Supabase client helpers
+# lib/supabase — supabase client helpers
 
-browser and server Supabase clients will live here starting in phase 4
-(accounts + persistence). until then the app runs entirely on localStorage.
+- `client.ts` — one browser client per tab, plus `isSupabaseConfigured`. every
+  auth path checks that flag so the app still runs with no keys set.
+- `profiles.ts` — the only place that knows both the postgres column names and
+  the app's `Profile` type.
 
-config template: see `.env.local.example` in the repo root.
+schema and row level security live in `supabase/migrations/`. setup steps are in
+`docs/walkthroughs/phase-4.md`, config template is `.env.local.example`.

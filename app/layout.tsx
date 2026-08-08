@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import { ProfileProvider } from '@/components/ProfileProvider'
+import { SessionProvider } from '@/components/SessionProvider'
 import './globals.css'
 
 // geist mono went with the scaffold, nothing was using it
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={geistSans.variable}>
       <body>
-        {/* profile lives in context + localStorage, so every route can read it
-            without prop drilling. swaps to supabase in phase 4 */}
-        <ProfileProvider>{children}</ProfileProvider>
+        {/* session has to sit outside the profile, since who is signed in
+            decides whether the profile syncs to the cloud or stays local */}
+        <SessionProvider>
+          <ProfileProvider>{children}</ProfileProvider>
+        </SessionProvider>
       </body>
     </html>
   )

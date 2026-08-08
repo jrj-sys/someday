@@ -11,6 +11,11 @@
   padding: 12px 20px;
 }
 
+.headerActions {
+  display: flex;
+  gap: 8px;
+}
+
 .stage {
   flex: 1;
   position: relative;

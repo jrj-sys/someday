@@ -28,7 +28,7 @@ export default function GlobeShell() {
     fetchWorld().then(setWorld).catch(console.error)
   }, [])
 
-  // this is the whole point of "see my globe" 
+  // this is the whole point of "see my globe"
   const visited = useMemo(() => new Set(profile?.visited ?? []), [profile])
 
   // score everything, not just the top ten, so clicking any country can still
