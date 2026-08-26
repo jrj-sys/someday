@@ -1,17 +1,32 @@
 'use client'
 
+import MemoriesSection from '@/components/MemoriesSection'
 import type { ScoredCountry } from '@/lib/recommend/types'
+import Button from './Button'
 import styles from './CountryPanel.module.css'
 
 interface CountryPanelProps {
+  countryId: string
   name: string
+  // two letter code, used to keep place searches inside this country
+  countryCode?: string
   visited: boolean
   scored: ScoredCountry | null
   rank: number | null
   onClose: () => void
+  onMarkVisited: () => void
 }
 
-export default function CountryPanel({ name, visited, scored, rank, onClose }: CountryPanelProps) {
+export default function CountryPanel({
+  countryId,
+  name,
+  countryCode,
+  visited,
+  scored,
+  rank,
+  onClose,
+  onMarkVisited,
+}: CountryPanelProps) {
   const matchPercent = scored ? Math.round(scored.score * 100) : 0
 
   return (
@@ -23,6 +38,14 @@ export default function CountryPanel({ name, visited, scored, rank, onClose }: C
       <h2 className={styles.name}>{name}</h2>
 
       {visited && <p className={styles.visited}>You have been here</p>}
+
+      {!visited && (
+        <div className={styles.markRow}>
+          <Button size="sm" variant="ghost" onClick={onMarkVisited}>
+            I have been here
+          </Button>
+        </div>
+      )}
 
       {!visited && scored && (
         <>
@@ -49,6 +72,12 @@ export default function CountryPanel({ name, visited, scored, rank, onClose }: C
 
       {/* the dataset is ~70 destinations, everywhere else has nothing to say yet */}
       {!visited && !scored && <p className={styles.unknown}>Not scored yet, no data on file.</p>}
+
+      <MemoriesSection
+        countryId={countryId}
+        countryCode={countryCode}
+        onEntrySaved={onMarkVisited}
+      />
     </aside>
   )
 }

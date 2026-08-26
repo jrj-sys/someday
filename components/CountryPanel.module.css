@@ -45,6 +45,10 @@
   display: inline-block;
 }
 
+.markRow {
+  margin-top: 12px;
+}
+
 .scoreRow {
   display: flex;
   align-items: center;

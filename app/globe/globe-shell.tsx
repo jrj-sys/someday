@@ -20,7 +20,7 @@ const HOW_MANY_GLOW = 10
 const DIMMEST_GLOW = 0.25
 
 export default function GlobeShell() {
-  const { profile } = useProfile()
+  const { profile, save } = useProfile()
   const [world, setWorld] = useState<World | null>(null)
   const [selected, setSelected] = useState<CountryFeature | null>(null)
 
@@ -86,6 +86,13 @@ export default function GlobeShell() {
     })
   }
 
+  // writing about a country means you went, so the globe shouldn't still be
+  // recommending it. visited lives on the profile, so this is a profile edit
+  function markVisited(id: string) {
+    if (!profile || profile.visited.includes(id)) return
+    save({ ...profile, visited: [...profile.visited, id] })
+  }
+
   return (
     <div className={styles.stage}>
       <GlobeLazy
@@ -99,11 +106,14 @@ export default function GlobeShell() {
 
       {selected && selectedId && (
         <CountryPanel
+          countryId={selectedId}
           name={selected.properties.ADMIN}
+          countryCode={selected.properties.ISO_A2}
           visited={visited.has(selectedId)}
           scored={scoredByCountryId.get(selectedId) ?? null}
           rank={rankOf(selectedId)}
           onClose={() => setSelected(null)}
+          onMarkVisited={() => markVisited(selectedId)}
         />
       )}
     </div>
